@@ -60,3 +60,11 @@ def removeMovieActor(request, id, pk):
         movie.actors.remove(actor.first())
         
     return Response(serializer.data)
+
+# Get movie reviews 
+@api_view(["GET"])
+def movieReviews(request, id):
+    reviews = Review.objects.filter(movie=id)
+    serializer = ReviewSerializer(reviews, many=True)
+    
+    return Response(serializer.data)
