@@ -1,5 +1,5 @@
 <template>
-  <h3 class="mt-16 mb-5">How do you rate this movie</h3>
+  <h3 class="mt-16 mb-5">How do you rate this movie ?</h3>
   <form @submit.prevent="addRating" class="mt-5">
     <div class="">
       <v-rating v-model="rating" item-aria-label="custom icon label text {0} of {1}"></v-rating>
