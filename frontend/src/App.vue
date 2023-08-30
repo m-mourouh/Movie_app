@@ -1,18 +1,9 @@
 <template>
-  <v-app>
+  <v-app class="bg-grey-5">
     <v-main>
-      <router-view/>
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
-<script>
-
-export default {
-  name: 'App',
-
-  data: () => ({
-    //
-  }),
-}
-</script>
+<script setup></script>
