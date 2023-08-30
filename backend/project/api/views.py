@@ -2,6 +2,9 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import MovieSerializer, ActorSerializer, ReviewSerializer
 from .models import Movie, Actor, Review
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Movie ViewSet
@@ -18,3 +21,29 @@ class ActorViewSet(viewsets.ModelViewSet):
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+# add -> new actor ->  movie
+@api_view(["POST"])
+def addMovieActor(request, id):
+    movie = Movie.objects.filter(id=id).first()
+    actor = Actor.objects.filter(first_name=request.data["first_name"], last_name=request.data["last_name"])
+    actorSerializer = ActorSerializer(data= request.data, many=False)
+    movieSerializer = MovieSerializer(movie, many=False)
+    
+     # check if  actor already exists + valid serializer
+    try:
+        if actorSerializer.is_valid() and not actor.exists():
+            actorSerializer.save()
+            actor = Actor.objects.get(id=actorSerializer.data["id"])
+            movie.actors.add(actor)
+            
+        movie_actor = movie.actors.filter(first_name=request.data["first_name"], last_name=request.data["last_name"])
+        
+        if  not movie_actor.exists() and actor.exists():
+            actor = Actor.objects.get(id=actor.first().id)
+            movie.actors.add(actor)
+            
+    except ObjectDoesNotExist:
+        print("Actor dosn't exist ")
+        
+    return Response(movieSerializer.data)
