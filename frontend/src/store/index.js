@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+import router from '@/router'
 
 const store = createStore({
   state: {
@@ -51,6 +52,7 @@ const store = createStore({
           commit('setMovie', { movie })
         })
         .catch((err) => {
+           router.push({ name: 'not-found' })
           console.error(err)
         })
     },
