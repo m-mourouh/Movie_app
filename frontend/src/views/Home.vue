@@ -10,28 +10,34 @@
           <!-- </router-link> -->
         </v-col>
       </v-row>
-
+            <!-- pagination -->
+      <Pagination :length="pageCount" />
     </v-container>
   </v-main>
 </template>
 
 <script setup>
 import MovieCard from '@/components/MovieCard.vue'
+import Pagination from '@/components/Pagination.vue'
 import { computed, onMounted, watch } from 'vue'
 import { ref } from 'vue'
 
 import { useStore } from 'vuex'
 
+const pageCount = ref(0)
 const movies = ref([])
+
 const store = useStore()
 
 //computed properties
 const getMovies = computed(() => store.state.moviesList)
+const getPageCount = computed(() => store.state.pageCount)
 
 //life cycle
 onMounted(async () => {
   await store.dispatch('getMovies')
   movies.value = getMovies.value
+  pageCount.value = getPageCount.value
 })
 
 // watchers
