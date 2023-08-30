@@ -4,14 +4,16 @@ from .serializers import MovieSerializer, ActorSerializer, ReviewSerializer
 from .models import Movie, Actor, Review
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from .paginations import CustomPagination
 from django.core.exceptions import ObjectDoesNotExist
 from celery import shared_task
 import time
 
 # Movie ViewSet
-class MovieViewSet(viewsets.ModelViewSet):
+class MovieViewSet(viewsets.ModelViewSet, CustomPagination):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
+    pagination_class = CustomPagination
     
 # Actor ViewSet
 class ActorViewSet(viewsets.ModelViewSet):
