@@ -45,7 +45,7 @@ const store = createStore({
     },
     async getMovie({ commit }, { id }) {
       await axios
-        .get(`/movies/${id}`)
+        .get(`/movies/${id}/`)
         .then((res) => {
           let movie = res.data
           commit('setMovie', { movie })
