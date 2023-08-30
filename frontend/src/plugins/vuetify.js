@@ -2,9 +2,24 @@
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
 
-// Vuetify
+// Composables
 import { createVuetify } from 'vuetify'
 
-export default createVuetify(
-  // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
-)
+const myCustomLightTheme = {
+  colors: {
+    "grey-5": "#212426",
+    "grey-4": "#343739",
+    "grey-3": "#6F6F6F",
+    white: "#FFFFFF",
+  },
+};
+
+
+export default createVuetify({
+  theme: {
+    defaultTheme: "myCustomLightTheme",
+    themes: {
+      myCustomLightTheme,
+    },
+  },
+});
