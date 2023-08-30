@@ -24,6 +24,9 @@ const store = createStore({
     },
     editMovieDescription(state, { newDescription }) {
       state.movie = { ...state.movie, description: newDescription }
+    },
+    setMovieActors(state, { actors }) {
+      state.movie.actors = actors
     }
   },
   actions: {
@@ -98,7 +101,30 @@ const store = createStore({
           console.error(err)
         })
     },
-    
+    // add new movie actor
+    // eslint-disable-next-line no-unused-vars
+    async updateMovieActors({ commit }, { id, pk, actor, operation }) {
+      // add new actor
+      if (operation === 'add') {
+        await axios
+          .post(`/movie/${id}/actor`, actor)
+          .then((res) => {
+            commit('setMovieActors', { actors: res.data.actors })
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      } else if (operation === 'delete') {
+        await axios
+          .delete(`/movie/${id}/actor/${pk}`, { data: { ...actor } })
+          .then((res) => {
+            commit('setMovieActors', { actors: res.data.actors })
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      }
+    }
   }
 })
 
