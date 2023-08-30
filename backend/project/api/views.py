@@ -47,3 +47,16 @@ def addMovieActor(request, id):
         print("Actor dosn't exist ")
         
     return Response(movieSerializer.data)
+
+# delete ->  actor ->  movie
+@api_view(["DELETE"])
+def removeMovieActor(request, id, pk):
+    movie = Movie.objects.filter(id=id).first()
+     # check if actor already exists
+    actor = Actor.objects.filter(id=pk,first_name=request.data["first_name"], last_name=request.data["last_name"])
+    serializer = MovieSerializer(movie, many=False)
+    
+    if actor.exists():
+        movie.actors.remove(actor.first())
+        
+    return Response(serializer.data)
