@@ -18,6 +18,9 @@ const store = createStore({
     },
     setPageCount(state, payload) {
       state.pageCount = payload.count
+    },
+    setMovieGrade(state, payload) {
+      state.grade = payload.grade
     }
   },
   actions: {
@@ -53,6 +56,28 @@ const store = createStore({
           let movies = data.results
           console.log(data)
           commit('setMoviesList', { movies })
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    },
+    async getMovieReviews({ commit }, { id }) {
+      await axios
+        .get(`/movie-reviews/${id}`)
+        .then((res) => {
+          const reviews = res.data
+          if (reviews.length > 0) {
+            const grade = (
+              reviews.reduce(
+                (accumulator, currentElement) => accumulator + currentElement.grade,
+                0
+              ) / reviews.length
+            ).toFixed(1)
+            commit('setMovieGrade', { grade })
+          } else {
+            const grade = 0
+            commit('setMovieGrade', { grade })
+          }
         })
         .catch((err) => {
           console.error(err)
