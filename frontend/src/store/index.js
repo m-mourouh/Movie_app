@@ -13,11 +13,12 @@ const store = createStore({
     setMoviesList(state, payload) {
       state.moviesList = payload.movies
     },
-
+    setMovie(state, payload) {
+      state.movie = payload.movie
+    },
     setPageCount(state, payload) {
       state.pageCount = payload.count
-    },
-
+    }
   },
   actions: {
     async getMovies({ commit }) {
@@ -26,9 +27,19 @@ const store = createStore({
         .then((res) => {
           let data = res.data
           let movies = data.results
-          console.log(data)
           commit('setPageCount', { count: Math.ceil(data.count / 5) })
           commit('setMoviesList', { movies })
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    },
+    async getMovie({ commit }, { id }) {
+      await axios
+        .get(`/movies/${id}`)
+        .then((res) => {
+          let movie = res.data
+          commit('setMovie', { movie })
         })
         .catch((err) => {
           console.error(err)
