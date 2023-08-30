@@ -11,6 +11,7 @@
   <v-main class="mt-15 pa-5">
     <v-container>
       <MovieDetails :movie="movie" :grade="grade" />
+      <EditMovieDetails :movie="movie" />
     </v-container>
   </v-main>
 </template>
@@ -18,6 +19,7 @@
 <script setup>
 import { computed, onMounted } from 'vue'
 import MovieDetails from '../components/MovieDetails.vue'
+import EditMovieDetails from '../components/EditMovieDetails.vue'
 import { useStore } from 'vuex'
 
 // props
