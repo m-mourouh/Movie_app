@@ -5,9 +5,9 @@
       <!-- Movie Cards -->
       <v-row no-gutters>
         <v-col v-for="movie in movies" :key="movie.id" cols="12" sm="4" md="4" lg="3" class="pa-1">
-          <!-- <router-link :to="{ name: 'details', params: { id: movie.id } }" class="text-decoration-none"> -->
+          <router-link :to="{ name: 'details', params: { id: movie.id } }" class="text-decoration-none">
             <MovieCard :movie="movie" />
-          <!-- </router-link> -->
+          </router-link>
         </v-col>
       </v-row>
             <!-- pagination -->
