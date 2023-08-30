@@ -21,6 +21,9 @@ const store = createStore({
     },
     setMovieGrade(state, payload) {
       state.grade = payload.grade
+    },
+    editMovieDescription(state, { newDescription }) {
+      state.movie = { ...state.movie, description: newDescription }
     }
   },
   actions: {
@@ -82,7 +85,20 @@ const store = createStore({
         .catch((err) => {
           console.error(err)
         })
-    }
+    },
+    // update movie description
+    async updateMovieDescription({ commit }, movie) {
+      await axios
+        .put(`/movies/${movie.id}/`, movie)
+        .then((res) => {
+          const newDescription = res.data.description
+          commit('editMovieDescription', { newDescription })
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    },
+    
   }
 })
 
