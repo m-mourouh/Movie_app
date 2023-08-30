@@ -44,6 +44,19 @@ const store = createStore({
         .catch((err) => {
           console.error(err)
         })
+    },
+    async getPageMovies({ commit }, { currentPage: page }) {
+      await axios
+        .get(`/movies/?p=${page}`)
+        .then((res) => {
+          let data = res.data
+          let movies = data.results
+          console.log(data)
+          commit('setMoviesList', { movies })
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     }
   }
 })
