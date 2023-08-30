@@ -124,6 +124,18 @@ const store = createStore({
             console.error(err)
           })
       }
+    },
+    // add new movie review
+    // eslint-disable-next-line no-unused-vars
+    async addMovieReview({ commit }, review) {
+      await axios
+        .post(`/movie/${review.movie}/review`, review)
+        .then((res) => {
+          console.log('Review added successfully', res)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     }
   }
 })
