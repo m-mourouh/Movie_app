@@ -5,7 +5,8 @@ from .models import Movie, Actor, Review
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
-
+from celery import shared_task
+import time
 
 # Movie ViewSet
 class MovieViewSet(viewsets.ModelViewSet):
@@ -67,4 +68,15 @@ def movieReviews(request, id):
     reviews = Review.objects.filter(movie=id)
     serializer = ReviewSerializer(reviews, many=True)
     
+    return Response(serializer.data)
+
+# Add new movie review
+@api_view(["POST"]) 
+@shared_task
+def addMovieReview(request, id):
+    time.sleep(10)
+    serializer = ReviewSerializer(data= request.data, many=False)
+    
+    if serializer.is_valid():
+            serializer.save()
     return Response(serializer.data)

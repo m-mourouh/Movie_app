@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-from .views import MovieViewSet, ActorViewSet, ReviewViewSet, addMovieActor, removeMovieActor, movieReviews
+from .views import MovieViewSet, ActorViewSet, ReviewViewSet, addMovieActor, removeMovieActor, movieReviews, addMovieReview
 
 router = DefaultRouter()
 router.register('movies', MovieViewSet, basename='movie')
@@ -11,6 +11,7 @@ urlpatterns = [
         path('movie/<str:id>/actor', addMovieActor, name="add-movie-actor"),
         path('movie/<str:id>/actor/<str:pk>', removeMovieActor, name="remove-movie-actor"),
         path('movie-reviews/<str:id>', movieReviews, name="movie-reviews"),
+        path('movie/<str:id>/review', addMovieReview, name="add-movie-review"),
 ]
 
 urlpatterns += router.urls
