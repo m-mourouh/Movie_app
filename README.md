@@ -5,11 +5,11 @@
 
 ## Getting Started
 
-First, build all the services defined in your docker-compose.yml:
+First, build all the services defined in your `docker-compose.yml`:
 ```bash
   docker compose build
 ```
- Start the services defined in your Docker Compose configuration:
+ Start the services defined in your docker compose configuration:
 
 ```bash
    docker compose up
